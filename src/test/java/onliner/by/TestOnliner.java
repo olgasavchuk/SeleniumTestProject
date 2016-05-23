@@ -1,5 +1,6 @@
 package onliner.by;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -8,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,17 +31,23 @@ public class TestOnliner {
         driver.get("https://www.onliner.by/");
         driver.findElement(By.cssSelector(".auth-bar__item.auth-bar__item--text")).click();
 
-        //WebDriver wait = new WebDriverWait(driver, 500);
-        //WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".auth-box__input[type='text']")));
+        WebElement wait1 = (new WebDriverWait(driver, 3000))
+                .until(ExpectedConditions.presenceOfElementLocated(By.id("auth-container__forms")));
 
-        driver.findElement(By.xpath("//input[@type='text']")).sendKeys("blabla");
-        //driver.findElement(By.cssSelector(".auth-box__input[type='text']")).sendKeys("wow");
+        driver.findElement(By.cssSelector(".auth-box__input[type='text']")).sendKeys("wow");
         driver.findElement(By.cssSelector(".auth-box__input[type='password']")).sendKeys("wow");
         driver.findElement(By.cssSelector(".auth-box__auth-submit.auth__btn.auth__btn--green")).click();
 
-        //String error_text = driver.findElement(By.cssSelector("div.auth-box__line.auth-box__line--error.js-error")).getText();
-        String error_text = driver.findElement(By.xpath("//div[@id='auth-container__forms']/div/div[2]/form/div[4]/div")).getText();
+        WebElement wait2 = (new WebDriverWait(driver, 3000))
+                .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.auth-box__line.auth-box__line--error.js-error")));
 
-        assertThat(error_text,equalTo("Неверный пароль"));
+
+        String error_text = driver.findElement(By.cssSelector("div.auth-box__line.auth-box__line--error.js-error")).getText();
+
+        assertThat(error_text,equalTo("РќРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ"));
     }
+
+
+
+
 }
