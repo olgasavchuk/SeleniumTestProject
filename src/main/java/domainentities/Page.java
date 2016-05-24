@@ -11,7 +11,7 @@ import static org.openqa.selenium.By.cssSelector;
 public class Page {
 
     public static final String LOGIN_BUTTON = ".auth-bar__item.auth-bar__item--text";
-    public static final String FORM_LOGIN = ".auth-box auth-box--form";
+    public static final String FORM_LOGIN = ".auth-box.auth-box--form";
     public static final String LOGIN_INPUT = ".auth-box__input[type='text']";
     public static final String PASSWORD_INPUT = ".auth-box__input[type='password']";
     public static final String SUBMIT_BUTTON = ".auth-box__auth-submit.auth__btn.auth__btn--green";
@@ -32,23 +32,21 @@ public class Page {
         return driver.findElement(by);
     }
 
+    private void wait(By by) {
+        WebElement element = new WebDriverWait(driver, 3000)
+                .until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
     public void login(String login, String password) {
-
         $(cssSelector(LOGIN_BUTTON)).click();
-
-        WebElement wait1 = (new WebDriverWait(driver, 3000))
-                .until(ExpectedConditions.presenceOfElementLocated(By.id("auth-container__forms")));
-
+        wait(cssSelector(FORM_LOGIN));
         $(cssSelector(LOGIN_INPUT)).sendKeys(login);
         $(cssSelector(PASSWORD_INPUT)).sendKeys(password);
         $(cssSelector(SUBMIT_BUTTON)).click();
     }
 
     public String getErrorMsg() {
-
-        WebElement wait2 = (new WebDriverWait(driver, 3000))
-                .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(ERROR_TEXT)));
-
+        wait(cssSelector(ERROR_TEXT));
         return $(cssSelector(ERROR_TEXT)).getText();
     }
 }
