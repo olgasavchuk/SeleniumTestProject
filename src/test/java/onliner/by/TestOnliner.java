@@ -1,12 +1,11 @@
 package onliner.by;
 
+import domainentities.Page;
 import org.junit.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.awt.*;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,33 +13,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TestOnliner {
 
     WebDriver driver;
+    Page page;
 
     @Before
     public void setUp() {
 
         driver = new FirefoxDriver();
-        driver.manage().window().maximize();
+        page = new Page(driver);
     }
 
     @Test
     public void testErrorOnLogin() {
-        driver.get("https://www.onliner.by/");
-        driver.findElement(By.cssSelector(".auth-bar__item.auth-bar__item--text")).click();
+        page.open();
+        page.login("wow1", "wow2");
 
-        WebElement wait1 = (new WebDriverWait(driver, 3000))
-                .until(ExpectedConditions.presenceOfElementLocated(By.id("auth-container__forms")));
-
-        driver.findElement(By.cssSelector(".auth-box__input[type='text']")).sendKeys("wow");
-        driver.findElement(By.cssSelector(".auth-box__input[type='password']")).sendKeys("wow");
-        driver.findElement(By.cssSelector(".auth-box__auth-submit.auth__btn.auth__btn--green")).click();
-
-        WebElement wait2 = (new WebDriverWait(driver, 3000))
-                .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.auth-box__line.auth-box__line--error.js-error")));
-
-
-        String error_text = driver.findElement(By.cssSelector("div.auth-box__line.auth-box__line--error.js-error")).getText();
-
-        assertThat(error_text,equalTo("Неверный пароль"));
+        String error_text = page.getErrorMsg();
+        assertThat(error_text,equalTo("Неверный ник или e-mail"));
     }
 
     @After
