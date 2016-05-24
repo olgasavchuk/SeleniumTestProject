@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.By.cssSelector;
@@ -18,6 +19,7 @@ public class Page {
     public static final String ERROR_TEXT = ".auth-box__line.auth-box__line--error.js-error";
 
     WebDriver driver;
+    Wait wait;
 
     public Page (WebDriver driver) {
         this.driver = driver;
@@ -26,6 +28,7 @@ public class Page {
     public void open() {
         driver.get("https://www.onliner.by/");
         driver.manage().window().maximize();
+        wait = new WebDriverWait(driver,3000,10); // doubts about it
     }
 
     private WebElement $(By by) {
@@ -33,8 +36,7 @@ public class Page {
     }
 
     private void wait(By by) {
-        WebElement element = new WebDriverWait(driver, 3000)
-                .until(ExpectedConditions.presenceOfElementLocated(by));
+        wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
     public void login(String login, String password) {
