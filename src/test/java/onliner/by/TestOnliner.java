@@ -1,16 +1,12 @@
 package onliner.by;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -47,7 +43,8 @@ public class TestOnliner {
         assertThat(error_text,equalTo("Неверный пароль"));
     }
 
-
-
-
+    @After
+    public void tearDown() throws Exception {
+        driver.close();
+    }
 }
