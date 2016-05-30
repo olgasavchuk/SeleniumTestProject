@@ -1,6 +1,7 @@
 package onliner.by;
 
 import domainentities.Page;
+import domainentities.WebDriverHolder;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -17,7 +18,8 @@ public class TestOnliner {
     public void setUp() {
 
         driver = new FirefoxDriver();
-        page = new Page(driver);
+        WebDriverHolder.setDriver(driver);
+        page = new Page();
     }
 
     @Test
@@ -26,7 +28,7 @@ public class TestOnliner {
         page.login("wow1", "wow2");
 
         String error_text = page.getErrorMsg();
-        assertThat(error_text,equalTo("Неверный ник или e-mail"));
+        assertThat(error_text,equalTo("The username or password do not match our records. Please try again."));
     }
 
     @After
