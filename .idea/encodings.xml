@@ -3,6 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/.gitignore" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/domainentities/Page.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/test/java/onliner/by/TestOnliner.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/onliner/by/TestPortalLogin.java" charset="UTF-8" />
   </component>
 </project>
